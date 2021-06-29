@@ -13,7 +13,8 @@ allprojects { project ->
 	sourceCompatibility = JavaVersion.VERSION_16
 	targetCompatibility = JavaVersion.VERSION_16
 
-	apply from: 'https://dblsaiko.net/pub/gradle/autoversion.gradle'
+	//apply from: 'https://dblsaiko.net/pub/gradle/autoversion.gradle'
+	version = "1.3.0"
 	archivesBaseName = project.archives_base_name
 	group = project.maven_group
 
@@ -126,6 +127,9 @@ allprojects { project ->
 }
 
 dependencies {
+	modImplementation project(":rayon-core")
+	modImplementation project(":rayon-entity")
+	modImplementation project(":rayon-particle")
 	include project(":rayon-core")
 	include project(":rayon-entity")
 	include project(":rayon-particle")
@@ -151,3 +155,17 @@ remapJar {
 	dependsOn shadowJar
 	input.set shadowJar.archiveFile.get()
 }
+
+/*
+sourceSets {
+	testmod {
+		subprojects.forEach {
+			compileClasspath += it.sourceSets.main.compileClasspath
+			runtimeClasspath += it.sourceSets.main.runtimeClasspath
+			println(compileClasspath.asPath)
+			println(runtimeClasspath.asPath)
+		}
+	}
+}
+
+ */
