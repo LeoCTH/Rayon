@@ -64,19 +64,23 @@ public class NativeLoader {
     static String getChecksum(MessageDigest digest, Path path) throws IOException {
         var channel = Files.newByteChannel(path, StandardOpenOption.READ);
         var buf = ByteBuffer.allocate(1024);
-        while (channel.read(buf) > 0) {
-            digest.update(buf);
+        var bytesRead = 0;
+
+        while ((bytesRead = channel.read(buf)) > 0) {
+            buf.flip();
+            digest.update(buf.array(), 0, bytesRead);
+            buf.clear();
         }
+
         channel.close();
         var bytes = digest.digest();
         var sb = new StringBuilder();
 
-        for (var aByte : bytes) {
-            sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+        for (byte b : bytes) {
+            sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
         }
         return sb.toString();
     }
-
 
     static String getPlatformSpecificName() {
         final var platform = JmeSystem.getPlatform();
