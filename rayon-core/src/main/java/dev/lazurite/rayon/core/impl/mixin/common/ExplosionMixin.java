@@ -30,7 +30,7 @@ public class ExplosionMixin {
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    public void collectBlocksAndDamageEntities(CallbackInfo info, Set set, float q, int r, int s, int t, int u, int v, int w, List list, Vec3d vec3d, int x, Entity entity) {
+    public void collectBlocksAndDamageEntities(CallbackInfo info, Set set, int i, float q, int r, int s, int t, int u, int v, int w, List list, Vec3d vec3d, int x, Entity entity) {
         this.entity = entity;
     }
 
